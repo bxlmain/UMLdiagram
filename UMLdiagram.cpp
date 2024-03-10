@@ -5,7 +5,6 @@
 #include "Sphere.h"
 #include "Triangle.h"
 #include "Shape2D.h"
-#pragma once
 #include <iostream>
 #include <string>
 #include <cmath>
