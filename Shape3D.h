@@ -1,14 +1,17 @@
-#pragma once
-#include <iostream>
+#ifndef SHAPE3D_H
+#define SHAPE3D_H
+#include <string>
+#include "Shape.h"
 
-class Shape3D {
+class Shape3D : public Shape {
 protected:
-    float volume;
+	float volume;
 public:
-    virtual void CalculateVolume() = 0;
-    virtual void Scale(float scaleFactor) = 0;
-    virtual void ShowInfo() = 0;
-    virtual std::string GetName() const = 0;
-    float GetVolume() const { return volume; }
+	virtual float GetVolume() = 0;
+	virtual bool operator>(Shape3D& other) = 0;
+	virtual bool operator<(Shape3D& other) = 0;
+	virtual bool operator==(Shape3D& other) = 0;
+	virtual void CalculateVolume() = 0;
 };
 
+#endif SHAPE3D_H

@@ -1,23 +1,38 @@
-#pragma once
+#ifndef SPHERE_H
+#define SPHERE_H
+#include <iostream>
+#include <string>
 #include "Shape3D.h"
-#include <cmath>
 
 class Sphere : public Shape3D {
 private:
-    float radius;
+	float radius;
 public:
-    Sphere(float r) : radius(r) { CalculateVolume(); }
-    void Scale(float scaleFactor) override {
-        radius *= scaleFactor;
-        CalculateVolume();
-    }
-    void ShowInfo() override {
-        std::cout << "Я сфера!" << std::endl;
-        std::cout << "Мой объем = " << GetVolume() << std::endl;
-        std::cout << "Мой радиус = " << radius << std::endl;
-    }
-    std::string GetName() const override { return "Sphere"; }
-    void CalculateVolume() override {
-        volume = (4.0f / 3.0f) * M_PI * pow(radius, 3);
-    }
+	Sphere(float r) : radius(r) {} // Constructor
+
+	float GetVolume() override {
+		return volume;
+	}
+	void Scale(float scaleFactor) override {
+		volume = volume * scaleFactor;
+	}
+	void ShowInfo() override {
+		std::cout << GetName() << std::endl;
+		std::cout << "Sphere with radius: " << radius << " and volume: " << GetVolume() << std::endl;
+	}
+	std::string GetName() override {
+		return "Sphere";
+	}
+	bool operator>(Shape3D& other) override {
+		return volume > other.GetVolume();
+	}
+	bool operator<(Shape3D& other) override {
+		return volume < other.GetVolume();
+	}
+	bool operator==(Shape3D& other) override { return volume == other.GetVolume(); }
+	void CalculateVolume() override {
+		volume = (4.0 / 3.0) * 3.141592 * radius * radius * radius;
+	}
 };
+
+#endif SPHERE_H

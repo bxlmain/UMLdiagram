@@ -1,26 +1,38 @@
-#pragma once
+#ifndef CYLINDER_H
+#define CYLINDER_H
+#include <iostream>
+#include <string>
 #include "Shape3D.h"
 #include "Circle.h"
 
+
 class Cylinder : public Shape3D {
 private:
-    Circle baseCircle;
-    float height;
+	float height;
+	Circle baseCircle;
 public:
-    Cylinder(float radius, float h) : baseCircle(radius), height(h) { CalculateVolume(); }
-    void Scale(float scaleFactor) override {
-        baseCircle.Scale(scaleFactor);
-        height *= scaleFactor;
-        CalculateVolume();
-    }
-    void ShowInfo() override {
-        std::cout << "Я цилиндр!" << std::endl;
-        std::cout << "Мой объем = " << GetVolume() << std::endl;
-        std::cout << "Высота моего цилиндра = " << height << std::endl;
-        baseCircle.ShowInfo();
-    }
-    std::string GetName() const override { return "Cylinder"; }
-    void CalculateVolume() override {
-        volume = baseCircle.GetArea() * height;
-    }
+	Cylinder(float h, float r) : height(h), baseCircle(r) {} // Constructor
+	void CalculateVolume() override {
+		baseCircle.CalculateArea();
+		volume = baseCircle.GetArea() * height;
+	}
+
+	float GetVolume() override {
+		return volume;
+	}
+	void Scale(float scaleFactor) override {
+		volume = volume * scaleFactor;
+	}
+	void ShowInfo() override {
+		CalculateVolume();
+		std::cout << GetName() << std::endl;
+		std::cout << "Cylinder with height:" << height << " and volume: " << GetVolume() << std::endl << std::endl;
+	}
+	std::string GetName() override {
+		return "Cylinder";
+	}
+	bool operator>(Shape3D& other) override { return volume > other.GetVolume(); }
+	bool operator<(Shape3D& other) override { return volume < other.GetVolume(); }
+	bool operator==(Shape3D& other) override { return volume == other.GetVolume(); }
 };
+#endif CYLINDER_H

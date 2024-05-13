@@ -1,24 +1,41 @@
-#pragma once
-#include "Shape2D.h"
+#ifndef CIRCLE_H
+#define CIRCLE_H
 #include <iostream>
-#include <cmath>
+#include <string>
+#include "Shape2D.h"
 
 class Circle : public Shape2D {
 private:
-    float radius;
+	float radius;
 public:
-    Circle(float r) : radius(r) { CalculateArea(); }
-    void Scale(float scaleFactor) override {
-        radius *= scaleFactor;
-        CalculateArea();
-    }
-    void ShowInfo() override {
-        std::cout << "Я круг!" << std::endl;
-        std::cout << "Моя площадь = " << GetArea() << std::endl;
-        std::cout << "Мой радиус = " << radius << std::endl;
-    }
-    std::string GetName() const override { return "Circle"; }
-    void CalculateArea() override {
-        area = M_PI * radius * radius;
-    }
+	Circle(float r) : radius(r) {} // Constructor
+
+	void CalculateArea() override {
+		area = 3.141592 * radius * radius;
+	}
+	float GetArea() override {
+		return area;
+	}
+	void Scale(float scaleFactor) override {
+		area = area * scaleFactor;
+	}
+	void ShowInfo() override {
+		std::cout << GetName() << std::endl;
+		std::cout << "Circle with radius: " << radius << " and area " << this->GetArea() << std::endl << std::endl;
+	}
+	std::string GetName() override {
+		return "Circle";
+	}
+	bool operator>(Shape2D& other) override {
+		return area > other.GetArea();
+	}
+	bool operator<(Shape2D& other) override {
+		return area < other.GetArea();
+	}
+	bool operator==(Shape2D& other) override {
+		return area == other.GetArea();
+	}
 };
+
+
+#endif CIRCLE_H

@@ -1,13 +1,17 @@
-#pragma once
-#include <iostream>
+#ifndef SHAPE2D_H
+#define SHAPE2D_H
+#include <string>
+#include "Shape.h"
 
-class Shape2D {
+class Shape2D : public Shape {
 protected:
-    float area;
+	float area;
 public:
-    virtual void CalculateArea() = 0;
-    virtual void Scale(float scaleFactor) = 0;
-    virtual void ShowInfo() = 0;
-    virtual std::string GetName() const = 0;
-    float GetArea() const { return area; }
+	virtual float GetArea() = 0;
+	virtual bool operator>(Shape2D& other) = 0;
+	virtual bool operator<(Shape2D& other) = 0;
+	virtual bool operator==(Shape2D& other) = 0;
+	virtual void CalculateArea() = 0;
 };
+
+#endif SHAPE2D_H
